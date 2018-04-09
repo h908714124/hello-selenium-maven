@@ -47,6 +47,5 @@ public class HelloSpringWebSocketIT {
     assertEquals(1, messages.size());
     WebElement firstMessage = messages.get(0);
     assertEquals("Hello, world!", firstMessage.findElement(By.tagName("td")).getText());
-
   }
 }

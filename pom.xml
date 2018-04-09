@@ -8,43 +8,20 @@
   <version>1.0-SNAPSHOT</version>
   <modelVersion>4.0.0</modelVersion>
 
+  <!-- https://github.com/Ardesco/Selenium-Maven-Template.git -->
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
     <!--Dependency Versions-->
     <selenium.version>3.11.0</selenium.version>
-    <assertj-core.version>3.9.1</assertj-core.version>
-    <testng.version>6.14.2</testng.version>
-    <query.version>1.2.0</query.version>
     <!--Plugin Versions-->
     <driver-binary-downloader-maven-plugin.version>1.0.17
     </driver-binary-downloader-maven-plugin.version>
     <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
-    <maven-failsafe-plugin.version>2.21.0</maven-failsafe-plugin.version>
-    <!--Configuration Properties-->
-    <overwrite.binaries>false</overwrite.binaries>
-    <read.timeout>30000</read.timeout>
-    <connection.timeout>40000</connection.timeout>
-    <retry.attempts>4</retry.attempts>
-    <browser>firefox_headless</browser>
-    <threads>1</threads>
-    <remote>false</remote>
-    <seleniumGridURL/>
-    <platform/>
-    <browserVersion/>
-    <proxyEnabled>false</proxyEnabled>
-    <proxyHost/>
-    <proxyPort/>
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-remote-driver</artifactId>
-      <version>${selenium.version}</version>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
@@ -55,6 +32,7 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.12</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
@@ -81,17 +59,18 @@
             <version>${driver-binary-downloader-maven-plugin.version}</version>
             <configuration>
               <rootStandaloneServerDirectory>
-                ${project.basedir}/src/test/resources/selenium_standalone_binaries
+                ${project.basedir}/src/test/driver/selenium_standalone_binaries
               </rootStandaloneServerDirectory>
               <downloadedZipFileDirectory>
-                ${project.basedir}/src/test/resources/selenium_standalone_zips
+                ${project.basedir}/src/test/driver/selenium_standalone_zips
               </downloadedZipFileDirectory>
-              <customRepositoryMap>${project.basedir}/src/test/resources/RepositoryMap.xml
+              <customRepositoryMap>
+                ${project.basedir}/src/test/download/RepositoryMap.xml
               </customRepositoryMap>
-              <overwriteFilesThatExist>${overwrite.binaries}</overwriteFilesThatExist>
-              <onlyGetDriversForHostOperatingSystem>false</onlyGetDriversForHostOperatingSystem>
-              <fileDownloadRetryAttempts>${retry.attempts}</fileDownloadRetryAttempts>
-              <fileDownloadReadTimeout>${read.timeout}</fileDownloadReadTimeout>
+              <overwriteFilesThatExist>false</overwriteFilesThatExist>
+              <onlyGetDriversForHostOperatingSystem>true</onlyGetDriversForHostOperatingSystem>
+              <fileDownloadRetryAttempts>4</fileDownloadRetryAttempts>
+              <fileDownloadReadTimeout>30000</fileDownloadReadTimeout>
               <operatingSystems>
                 <windows>true</windows>
                 <linux>true</linux>
@@ -109,21 +88,8 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-failsafe-plugin</artifactId>
-            <version>${maven-failsafe-plugin.version}</version>
             <configuration>
-              <parallel>methods</parallel>
-              <threadCount>${threads}</threadCount>
               <systemPropertyVariables>
-                <browser>${browser}</browser>
-                <screenshotDirectory>${project.build.directory}/screenshots</screenshotDirectory>
-                <remoteDriver>${remote}</remoteDriver>
-                <gridURL>${seleniumGridURL}</gridURL>
-                <desiredPlatform>${platform}</desiredPlatform>
-                <desiredBrowserVersion>${browserVersion}</desiredBrowserVersion>
-                <proxyEnabled>${proxyEnabled}</proxyEnabled>
-                <proxyHost>${proxyHost}</proxyHost>
-                <proxyPort>${proxyPort}</proxyPort>
-
                 <!--Set properties passed in by the driver binary downloader-->
                 <webdriver.chrome.driver>${webdriver.chrome.driver}</webdriver.chrome.driver>
                 <webdriver.ie.driver>${webdriver.ie.driver}</webdriver.ie.driver>
@@ -131,6 +97,7 @@
                 <webdriver.gecko.driver>${webdriver.gecko.driver}</webdriver.gecko.driver>
                 <webdriver.edge.driver>${webdriver.edge.driver}</webdriver.edge.driver>
               </systemPropertyVariables>
+
             </configuration>
             <executions>
               <execution>

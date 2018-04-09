@@ -5,6 +5,4 @@
 /target
 *.iml
 .idea
-/src/test/resources/RepositoryMap.xml
-/src/test/resources/selenium_standalone_zips
-/src/test/resources/selenium_standalone_binaries
+/src/test/driver
