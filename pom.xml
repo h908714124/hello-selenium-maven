@@ -8,7 +8,9 @@
   <version>1.0-SNAPSHOT</version>
   <modelVersion>4.0.0</modelVersion>
 
-  <!-- https://github.com/Ardesco/Selenium-Maven-Template.git -->
+  <!-- Quelle: https://github.com/Ardesco/Selenium-Maven-Template.git
+   Tests fuer: https://github.com/h908714124/hello-spring-websocket
+   -->
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
