@@ -14,26 +14,32 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class App {
 
   private final RemoteWebDriver driver;
-  private final WebElement input;
+  private WebElement input;
 
   public App(RemoteWebDriver driver) {
     this.driver = driver;
+  }
+
+  public void init() {
+    driver.get("http://localhost:8080");
     input = driver.findElement(By.id("text"));
   }
 
-  /**
-   * @param message
-   * @return Result rows
-   */
-  public List<WebElement> sendMessage(String message) {
+  public void enterMessage(String message) {
     input.clear();
     input.sendKeys(message);
+  }
+
+  public void sendMessage() {
     driver.findElement(By.id("send")).click();
+  }
+
+  public List<WebElement> waitForMessageReceived() {
     return new WebDriverWait(driver, 10).until(
         numberOfElementsToBeMoreThan(cssSelector("#greetings tr"), 0));
   }
 
-  public boolean connect() {
+  public boolean clickConnectButton() {
     driver.findElement(By.id("connect")).click();
     return new WebDriverWait(driver, 10).until(
         not(attributeToBeNotEmpty(input, "disabled")));
