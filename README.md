@@ -1,2 +1,4 @@
-mvn clean verify -Dbrowser=firefox_headless
+Running tests:
+
+    mvn clean verify
 
