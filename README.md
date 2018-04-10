@@ -1,4 +1,4 @@
 Running tests:
 
-    mvn clean verify
+    mvn clean test
 
